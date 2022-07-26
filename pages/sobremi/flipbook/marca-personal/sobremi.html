@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+		<script type="text/javascript" src="../extras/jquery.min.1.7.js"></script>
+		<script type="text/javascript" src="../extras/jquery-ui-1.8.20.custom.min.js"></script>
+		<script type="text/javascript" src="../extras/jquery.mousewheel.min.js"></script>
+		<script type="text/javascript" src="../extras/modernizr.2.5.3.min.js"></script>
+		<script type="text/javascript" src="../lib/hash.js"></script>
+
+		<!-- Nuestros estilos -->
+        <link rel="stylesheet" href="../../../../css/estilos.css">
+  
+        <!-- Librerias de animate style -->
+        <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  
+        <!-- Titulo-->
+        <title>Sobre mi</title>
+	</head>
+	<body>
+
+		<div class="container">
+			<!-- Barra de navegacion -->
+			<div class="row">
+				<nav class="navbar navbar-expand-lg animate__animated animate__fadeInLeft">
+				  <div class="container-fluid">
+					<a class="navbar-brand" href="#">
+					  <img src="../../../../img/logo.png" alt=""width=250px>
+					</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					  <span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNav">
+					  <ul class="navbar-nav">
+						<li class="nav-item"> 
+						  <a class="nav-link active" aria-current="page" href="../../../../index.html">Portafolio</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" href="sobremi.html">Sobre mi</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" href="../../../contacto/contacto.html">Contacto</a>
+						</li>
+					  </ul>
+				  </div>
+				</nav>
+			</div>
+
+			<div class="row">
+				<span class="m-3"></span>
+				<h1 class="titulo-portafolio" style="text-align: center;">FLIPBOOK</h1>
+			</div>
+
+			<div class="row">
+				<div id="canvas">
+					<div id="book-zoom">
+						<div class="sample-docs">
+							<div ignore="1" >
+								<div class="left"></div>
+								<div class="right"></div>
+							</div>
+							<!-- <div class="hard"></div> -->
+							<div class="hard"></div>
+							<!-- <div class="hard p14"></div> -->
+							<!-- <div class="hard p15"></div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+			 <!-- Footer -->
+			 <div class="row caja-footer">
+				<div class="col-4 caja4 wow animate__animated animate__lightSpeedInRight" style="text-align: center ;">
+				  <h4 class="titulo-portafolio">Johanna Linares</h4>
+				  <span class="parrafo-portafolio">Diseñadora Gráfica</span>
+				</div>
+				<div class="col-4 caja4 wow animate__animated animate__lightSpeedInRight" style="text-align: center ;">
+				  <span>Bogotá - Colombia @ CENIGRAF 2022</span>
+				</div>
+				<div class="col-4 caja4 wow animate__animated animate__lightSpeedInRight">
+				  <div class="row fila">
+					<div class="col-2">
+					  <a href="https://www.facebook.com/l.johanna.linares" target="_blank">
+						<img src="../../../../img/facebook.png" width="50" alt="">
+					  </a>
+					</div>
+					<div class="col-2">
+					  <a href="https://www.instagram.com/johannalady09/" target="_blank">
+						<img src="../../../../img/instagram.png" width="45" alt="">
+					  </a>
+					</div>
+					<div class="col-2">
+					  <a href="https://api.whatsapp.com/send?phone=573213240284" target="_blank">
+						<img src="../../../../img/whatsapp.png" width="45" alt="">
+					  </a>
+					</div>
+				  </div>
+				</div>
+			  </div>
+		</div>
+
+		<script type="text/javascript">
+
+			function loadApp() {
+
+				var flipbook = $('.sample-docs');
+
+				// Check if the CSS was already loaded
+				
+				if (flipbook.width()==0 || flipbook.height()==0) {
+					setTimeout(loadApp, 10);
+					return;
+				}
+
+				// Mousewheel
+
+				$('#book-zoom').mousewheel(function(event, delta, deltaX, deltaY) {
+
+					var data = $(this).data(),
+						step = 30,
+						flipbook = $('.sample-docs'),
+						actualPos = $('#slider').slider('value')*step;
+
+					if (typeof(data.scrollX)==='undefined') {
+						data.scrollX = actualPos;
+						data.scrollPage = flipbook.turn('page');
+					}
+
+					data.scrollX = Math.min($( "#slider" ).slider('option', 'max')*step,
+						Math.max(0, data.scrollX + deltaX));
+
+					var actualView = Math.round(data.scrollX/step),
+						page = Math.min(flipbook.turn('pages'), Math.max(1, actualView*2 - 2));
+
+					if ($.inArray(data.scrollPage, flipbook.turn('view', page))==-1) {
+						data.scrollPage = page;
+						flipbook.turn('page', page);
+					}
+
+					if (data.scrollTimer)
+						clearInterval(data.scrollTimer);
+					
+					data.scrollTimer = setTimeout(function(){
+						data.scrollX = undefined;
+						data.scrollPage = undefined;
+						data.scrollTimer = undefined;
+					}, 1000);
+
+				});
+
+				// Slider
+
+				$( "#slider" ).slider({
+					min: 1,
+					max: 100,
+
+					start: function(event, ui) {
+						if (!window._thumbPreview) {
+							_thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
+							setPreview(ui.value);
+							_thumbPreview.appendTo($(ui.handle));
+						} else
+							setPreview(ui.value);
+
+						moveBar(false);
+					},
+
+					slide: function(event, ui) {
+						setPreview(ui.value);
+					},
+
+					stop: function() {
+						if (window._thumbPreview)
+							_thumbPreview.removeClass('show');
+						
+						$('.sample-docs').turn('page', Math.max(1, $(this).slider('value')*2 - 2));
+					}
+				});
+
+
+				// URIs
+				
+				Hash.on('^page\/([0-9]*)$', {
+					yep: function(path, parts) {
+						var page = parts[1];
+
+						if (page!==undefined) {
+							if ($('.sample-docs').turn('is'))
+								$('.sample-docs').turn('page', page);
+						}
+
+					},
+					nop: function(path) {
+
+						if ($('.sample-docs').turn('is'))
+							$('.sample-docs').turn('page', 1);
+					}
+				});
+
+				// Arrows
+
+				$(document).keydown(function(e){
+
+					var previous = 37, next = 39;
+
+					switch (e.keyCode) {
+						case previous:
+
+							$('.sample-docs').turn('previous');
+
+						break;
+						case next:
+							
+							$('.sample-docs').turn('next');
+
+						break;
+					}
+
+				});
+
+				// Create the flipbook
+
+				flipbook.turn({
+					elevation: 50,
+					acceleration: false,
+					gradients: true,
+					autoCenter: true,
+					duration: 1000,
+					pages: 16,
+					when: {
+
+					turning: function(e, page, view) {
+						
+						var book = $(this),
+						currentPage = book.turn('page'),
+						pages = book.turn('pages');
+							
+						if (currentPage>3 && currentPage<pages-3) {
+							if (page==1) {
+								book.turn('page', 2).turn('stop').turn('page', page);
+								e.preventDefault();
+								return;
+							} else if (page==pages) {
+								book.turn('page', pages-1).turn('stop').turn('page', page);
+								e.preventDefault();
+								return;
+							}
+						} else if (page>3 && page<pages-3) {
+							if (currentPage==1) {
+								book.turn('page', 2).turn('stop').turn('page', page);
+								e.preventDefault();
+								return;
+							} else if (currentPage==pages) {
+								book.turn('page', pages-1).turn('stop').turn('page', page);
+								e.preventDefault();
+								return;
+							}
+						}
+
+						Hash.go('page/'+page).update();
+
+						if (page==1 || page==pages)
+							$('.sample-docs .tabs').hide();
+						
+
+					},
+
+					turned: function(e, page, view) {
+
+						var book = $(this);
+
+						$('#slider').slider('value', getViewNumber(book, page));
+
+						if (page!=1 && page!=book.turn('pages'))
+							$('.sample-docs .tabs').fadeIn(500);
+						else
+							$('.sample-docs .tabs').hide();
+
+						book.turn('center');
+						updateTabs();
+
+					},
+
+					start: function(e, pageObj) {
+				
+						moveBar(true);
+
+					},
+
+					end: function(e, pageObj) {
+					
+						var book = $(this);
+
+						setTimeout(function() {
+							$('#slider').slider('value', getViewNumber(book));
+						}, 1);
+
+						moveBar(false);
+
+					},
+
+					missing: function (e, pages) {
+
+						for (var i = 0; i < pages.length; i++)
+							addPage(pages[i], $(this));
+
+					}
+				}}). turn('page', 2);
+
+
+				$('#slider').slider('option', 'max', numberOfViews(flipbook));
+
+				flipbook.addClass('animated');
+
+
+				// Show canvas
+
+				$('#canvas').css({visibility: 'visible'});
+			}
+
+			// Hide canvas
+
+			$('#canvas').css({visibility: 'hidden'});
+
+			yepnope({
+				test: Modernizr.csstransforms,
+				yep: ['../lib/turn.min.js', 'css/jquery.ui.css'],
+				nope: ['../lib/turn.html4.min.js', 'css/jquery.ui.html4.css'],
+				both: ['css/docs.css', 'js/docs.js'],
+				complete: loadApp
+			});
+
+		</script>
+	</body>
+</html>

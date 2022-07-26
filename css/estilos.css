@@ -1,0 +1,147 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: spartan;
+  src: url(../fonts/league-spartan.bold.ttf);
+}
+
+@font-face {
+  font-family: libre;
+  src: url(../fonts/LibreBaskerville-Regular.ttf);
+}
+
+.titulo-portafolio {
+  font-family: spartan;
+}
+
+.parrafo-portafolio {
+  font-family: libre;
+}
+
+.link1 {
+  text-decoration:none;
+  color: rgb(165, 173, 150);
+  transition: background-color .5s;
+  font-size: 4vh;
+}
+
+.link-portafolio {
+  font-family: spartan;
+  text-decoration:none;
+  color: rgb(255, 255, 255);
+  font-size: 4vh;
+}
+
+.link1:hover {
+  color: rgb(255, 255, 255);
+}
+
+.link-portafolio:hover {
+  z-index: 1;
+  color: rgb(255, 255, 255);
+}
+
+.slider {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  margin: 1vh;
+  width: 100%;
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.caja {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 60vh;
+  margin: 1vh;
+  width: 30%;
+}
+
+.caja:hover {
+  filter:brightness(0.5);
+}
+
+.caja1 {
+  background-color: rgb(241, 248, 241);
+}
+
+.caja1:hover {
+  background-color: rgb(177, 181, 157);
+}
+
+.caja2 {
+  background-color: rgb(165, 173, 150);
+}
+
+.caja-footer {
+  bottom: 0;
+  width: 100%;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.formulario {
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.tarjeta {
+  justify-content: center;
+  text-align: center;
+}
+
+.portafolio-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150PX;
+  margin: 1vh;
+  width: 100PX;
+  
+}
+
+.contenedor-img-index {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  background-image: url('/img/portafolio-img/perrito.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.centrado {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
